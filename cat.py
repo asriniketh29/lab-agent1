@@ -1,11 +1,16 @@
 '''
-This program prints stdin to the screen.
+This program prints stdin to the screen using O(1) memory.
 '''
 import sys
 
+BUFFER_SIZE = 64 * 1024  # 64KB buffer
+
 def cat(file):
-    data = file.read()
-    sys.stdout.buffer.write(data)
+    while True:
+        chunk = file.read(BUFFER_SIZE)
+        if not chunk:
+            break
+        sys.stdout.buffer.write(chunk)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
